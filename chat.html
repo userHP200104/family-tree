@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Family Tree AI Chat</title>
+  <!-- Tailwind CSS for styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="p-4">
+  <h1 class="text-3xl font-bold mb-4">Family Tree AI Chat</h1>
+  <div id="chatBox" class="border p-4 mb-4 h-64 overflow-y-scroll bg-white"></div>
+  <input type="text" id="userInput" class="border p-2 rounded w-full" placeholder="Ask a question..." style="text-transform: uppercase;">
+  <button id="sendBtn" class="bg-green-600 text-white px-4 py-2 rounded mt-2">Send</button>
+
+  <script>
+    const chatBox = document.getElementById("chatBox");
+    const userInput = document.getElementById("userInput");
+    const sendBtn = document.getElementById("sendBtn");
+
+    function appendMessage(sender, message) {
+      const p = document.createElement("p");
+      p.innerHTML = `<strong>${sender}:</strong> ${message}`;
+      chatBox.appendChild(p);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    sendBtn.addEventListener("click", async () => {
+      const question = userInput.value;
+      if (!question) return;
+      appendMessage("You", question);
+      userInput.value = "";
+      // Call our Vercel serverless function for AI chat at /api/ask
+      const response = await fetch("/api/ask", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question })
+      });
+      const data = await response.json();
+      appendMessage("AI", data.answer);
+    });
+  </script>
+</body>
+</html>

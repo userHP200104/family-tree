@@ -1,15 +1,12 @@
 // familyFilter.js
 
-// Compute extended family: two levels above and below the selected person.
 function computeExtendedFamily(personId) {
     const person = people.find(p => p.id === personId);
     if (!person) return new Set();
     let familySet = new Set();
     familySet.add(person.id);
-    // Parents
     if (person.father) familySet.add(person.father);
     if (person.mother) familySet.add(person.mother);
-    // Grandparents
     if (person.father) {
       const father = people.find(p => p.id === person.father);
       if (father) {
@@ -24,17 +21,9 @@ function computeExtendedFamily(personId) {
         if (mother.mother) familySet.add(mother.mother);
       }
     }
-    // Siblings
-    people.forEach(p => {
-      if (p.id !== person.id && ((p.father && p.father === person.father) || (p.mother && p.mother === person.mother))) {
-        familySet.add(p.id);
-      }
-    });
-    // Children and grandchildren
     people.forEach(p => {
       if (p.father === person.id || p.mother === person.id) {
         familySet.add(p.id);
-        // Grandchildren
         people.forEach(gc => {
           if (gc.father === p.id || gc.mother === p.id) {
             familySet.add(gc.id);
@@ -45,7 +34,6 @@ function computeExtendedFamily(personId) {
     return familySet;
   }
   
-  // Apply the family filter.
   function applyFamilyFilter() {
     const select = document.getElementById("familySelect");
     if (!select.value) return;
@@ -65,7 +53,6 @@ function computeExtendedFamily(personId) {
     document.getElementById("clearFamilyFilterPageBtn").classList.remove("hidden");
   }
   
-  // Clear the family filter with a loader.
   function clearFamilyFilter() {
     const loader = document.getElementById("loader");
     loader.classList.remove("hidden");
@@ -76,7 +63,6 @@ function computeExtendedFamily(personId) {
     }, 1000);
   }
   
-  // Populate the family modal dropdown.
   function populateFamilyDropdown() {
     const select = document.getElementById("familySelect");
     select.innerHTML = "";

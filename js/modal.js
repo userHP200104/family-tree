@@ -1,10 +1,8 @@
 // modal.js
 
-// Open person info modal when a node is clicked.
 function openInfoModal(personId) {
     const person = people.find(p => p.id === personId);
     if (!person) return;
-    // Compute relationship details
     const relatives = computeFullRelatives(person);
     const infoHTML = `
       <p><strong>Full Name:</strong> ${person.fullname}</p>
@@ -16,7 +14,6 @@ function openInfoModal(personId) {
     `;
     document.getElementById("modalTitle").textContent = "Person Information";
     document.getElementById("modalContent").innerHTML = infoHTML;
-    // No Edit button provided.
     document.getElementById("personModal").classList.remove("hidden");
   }
   
@@ -24,7 +21,6 @@ function openInfoModal(personId) {
     document.getElementById("personModal").classList.add("hidden");
   }
   
-  // Compute full relatives (as before)
   function computeFullRelatives(person) {
     let relatives = {};
     relatives.parents = [];
