@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Family Tree - Data Table</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-white text-black">
+  <header class="p-4 bg-white shadow flex justify-between items-center fixed top-0 left-0 right-0 z-10">
+    <h1 class="text-3xl font-bold">Family Tree - Data Table</h1>
+    <div class="space-x-4">
+      <a href="index.html" class="bg-blue-600 text-white px-4 py-2 rounded">Tree View</a>
+      <button id="openAddModalBtn" class="bg-green-600 text-white px-4 py-2 rounded">Add New Person</button>
+      <button id="downloadCsvBtn" class="bg-indigo-600 text-white px-4 py-2 rounded">Download CSV</button>
+    </div>
+  </header>
+
+  <main class="pt-20 p-4">
+    <section>
+      <h2 class="text-2xl font-bold mb-4">Stored People Data</h2>
+      <table id="peopleTable" class="w-full border-collapse">
+        <thead>
+          <tr>
+            <th class="border px-2 py-1">ID</th>
+            <th class="border px-2 py-1">Full Name</th>
+            <th class="border px-2 py-1">Father</th>
+            <th class="border px-2 py-1">Mother</th>
+            <th class="border px-2 py-1">Spouse</th>
+            <th class="border px-2 py-1">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Populated by JS -->
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <!-- Add/Edit Person Modal (hidden by default) -->
+  <div id="personModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center">
+    <div class="bg-white p-6 rounded w-full max-w-lg">
+      <div class="flex justify-between items-center mb-4">
+        <h2 id="personModalTitle" class="text-xl font-bold">Add / Edit Person</h2>
+        <button id="closePersonModalBtn" class="text-black text-2xl">&times;</button>
+      </div>
+      <form id="personForm" class="space-y-4">
+        <!-- Basic Info -->
+        <div>
+          <label class="block">Common Name</label>
+          <input type="text" id="formCommonName" class="border p-2 rounded w-full" style="text-transform: uppercase;" required>
+        </div>
+        <div>
+          <label class="block">Family Name</label>
+          <input type="text" id="formFamilyName" class="border p-2 rounded w-full" style="text-transform: uppercase;" required>
+        </div>
+        <!-- Relationship fields -->
+        <div>
+          <label class="block">Father</label>
+          <input list="peopleDatalist" id="formFather" class="border p-2 rounded w-full" placeholder="Select or type a name" style="text-transform: uppercase;">
+        </div>
+        <div>
+          <label class="block">Mother</label>
+          <input list="peopleDatalist" id="formMother" class="border p-2 rounded w-full" placeholder="Select or type a name" style="text-transform: uppercase;">
+        </div>
+        <div>
+          <label class="block">Spouse</label>
+          <input list="peopleDatalist" id="formSpouse" class="border p-2 rounded w-full" placeholder="Select or type a name" style="text-transform: uppercase;">
+        </div>
+        <!-- Relative Entries -->
+        <div id="relativesSection">
+          <h3 class="text-lg font-semibold">Relatives</h3>
+          <div id="relativesContainer">
+            <!-- Relative input rows will be appended here -->
+          </div>
+          <button type="button" id="addRelativeBtn" class="bg-yellow-600 text-white px-4 py-2 rounded">Add Relative</button>
+        </div>
+        <datalist id="peopleDatalist">
+          <!-- Populated by JS -->
+        </datalist>
+        <div class="flex justify-end space-x-2">
+          <button type="button" id="cancelPersonFormBtn" class="px-4 py-2 border rounded">Cancel</button>
+          <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Our JS files -->
+  <script src="js/data.js" defer></script>
+  <script src="js/table.js" defer></script>
+</body>
+</html>

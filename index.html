@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Family Tree - Tree View</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- vis-network CSS -->
+  <link href="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.css" rel="stylesheet" />
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-white text-black">
+  <header class="p-4 bg-white shadow flex flex-col md:flex-row md:items-center md:justify-between fixed top-0 left-0 right-0 z-10 space-y-2 md:space-y-0">
+    <div class="flex items-center space-x-4">
+      <h1 class="text-3xl font-bold">Family Tree - Tree View</h1>
+      <a href="table.html" class="bg-blue-600 text-white px-4 py-2 rounded">Table View</a>
+    </div>
+    <!-- Search bar with datalist -->
+    <div class="flex items-center space-x-2">
+      <input type="text" id="searchInput" list="searchSuggestions" placeholder="Search for a person..." class="border p-2 rounded" style="text-transform: uppercase;">
+      <datalist id="searchSuggestions">
+        <!-- Options populated by search.js -->
+      </datalist>
+      <button id="searchBtn" class="bg-green-600 text-white px-3 py-2 rounded">Search</button>
+    </div>
+    <div class="flex items-center space-x-2">
+      <button id="openFamilyModalBtn" class="bg-purple-600 text-white px-4 py-2 rounded">My Family</button>
+      <!-- Clear Family Filter Button; hidden by default -->
+      <button id="clearFamilyFilterPageBtn" class="bg-red-600 text-white px-4 py-2 rounded hidden">Clear Family Filter</button>
+      <button id="openChangeLogBtn" class="bg-indigo-600 text-white px-4 py-2 rounded">Change Log</button>
+    </div>
+  </header>
+
+  <main class="pt-20">
+    <div id="graph"></div>
+    <!-- (Optional) Clear connection overlays button -->
+    <button id="clearConnectionOverlaysBtn" class="fixed bottom-20 right-4 bg-red-600 text-white px-4 py-2 rounded hidden">
+      Clear Connections
+    </button>
+  </main>
+
+  <!-- Loader (hidden by default) -->
+  <div id="loader" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+    <div class="loader text-white text-xl">Loading...</div>
+  </div>
+
+  <!-- Person Info Modal (no edit feature) -->
+  <div id="personModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center">
+    <div class="bg-white p-6 rounded w-full max-w-lg">
+      <div class="flex justify-between items-center mb-4">
+        <h2 id="modalTitle" class="text-xl font-bold">Person Information</h2>
+        <button id="closePersonModalBtn" class="text-black text-2xl">&times;</button>
+      </div>
+      <div id="modalContent" class="mb-4">
+        <!-- Person info details injected here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- My Family Modal (single dropdown only) -->
+  <div id="familyModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center">
+    <div class="bg-white p-6 rounded w-full max-w-md">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-bold">Show My Family</h2>
+        <button id="closeFamilyModalBtn" class="text-black text-2xl">&times;</button>
+      </div>
+      <label for="familySelect" class="block mb-2">Select a person:</label>
+      <select id="familySelect" class="border p-2 rounded w-full">
+        <!-- Options populated by familyFilter.js -->
+      </select>
+      <div class="flex justify-end space-x-2 mt-4">
+        <button id="applyFamilyFilterBtn" class="px-4 py-2 bg-green-600 text-white rounded">Find</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Change Log Modal (existing) -->
+  <div id="changeLogModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center">
+    <div class="bg-white p-6 rounded w-full max-w-lg">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-bold">Change Log</h2>
+        <button id="closeChangeLogBtn" class="text-black text-2xl">&times;</button>
+      </div>
+      <div id="changeLogContent" class="max-h-80 overflow-y-auto border p-2"></div>
+    </div>
+  </div>
+
+  <!-- vis-network JS -->
+  <script src="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.js"></script>
+  <!-- Our JS files -->
+  <script src="js/data.js" defer></script>
+  <script src="js/graph.js" defer></script>
+  <script src="js/modal.js" defer></script>
+  <script src="js/familyFilter.js" defer></script>
+  <script src="js/changelog.js" defer></script>
+  <script src="js/search.js" defer></script>
+</body>
+</html>
